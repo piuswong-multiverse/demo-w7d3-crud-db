@@ -5,6 +5,10 @@ const {sequelize} = require("./db");
 
 const port = 3000;
 
+// middleware to read in POST/PUT data...
+app.use(express.json());
+app.use(express.urlencoded({extended: true})); // extended:true lets you read in nested data
+
 // Getting all books from Books DB with endpoint "/books"
 app.get("/books", async (req, res) => {
     const books = await Books.findAll();
@@ -21,6 +25,14 @@ app.get("/books/:id", async (req, res) => {
 // CRUD operations on Books in Database
 
 // Add a book to the books database: 
+app.post('/books', async (req, res) => {
+    // read in the data coming from the request
+    const newBook = req.body;
+    // add the new book to our db
+    await Books.create(newBook);
+    // send out the new list of books
+    res.send(await Books.findAll());
+})
 
 // Update a book to the books database:
 
