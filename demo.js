@@ -27,9 +27,8 @@ app.get("/books/:id", async (req, res) => {
 // Add a book to the books database: 
 app.post('/books', async (req, res) => {
     // read in the data coming from the request
-    const newBook = req.body;
     // add the new book to our db
-    await Books.create(newBook);
+    await Books.create(req.body);
     // send out the new list of books
     res.send(await Books.findAll());
 })
