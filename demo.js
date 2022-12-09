@@ -34,6 +34,18 @@ app.post('/books', async (req, res) => {
 })
 
 // Update a book to the books database:
+app.put('/books/:id', async (req, res) => {
+    // extract data from request
+    const updatedBook = req.body;
+    // update the database
+    await Books.update(updatedBook, {
+        where: {
+            id: req.params.id
+        }
+    });
+    // send out the list of all books
+    res.send(await Books.findAll());
+})
 
 // Delete a book on books database:
 
