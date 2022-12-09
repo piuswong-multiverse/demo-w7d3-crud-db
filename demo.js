@@ -48,6 +48,17 @@ app.put('/books/:id', async (req, res) => {
 })
 
 // Delete a book on books database:
+app.delete('/books/:id', async (req, res) => {
+    // await Books.destroy({
+    //     where: {
+    //         id: req.params.id
+    //     }
+    // });
+    // Safer way to do it:
+    const bookToDelete = await Books.findByPk(req.params.id); // no decrement needed in db
+    await bookToDelete.destroy();
+    res.send(await Books.findAll());
+} )
 
 app.listen(port, () => {
     sequelize.sync();
